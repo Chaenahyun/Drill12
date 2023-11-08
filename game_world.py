@@ -2,14 +2,7 @@ objects = [[] for _ in range(4)]
 
 collision_pairs = {}
 
-def add_collision_pair(group, a, b): #add_collision_pair(boy:ball, None, ball)
-    if group not in collision_pairs:
-        print(f'Added new group {group}')
-        collision_pairs[group] = [ [], [] ]
-    if a:
-        collision_pairs[group][0].append(a)
-    if b:
-        collision_pairs[group][1].append(b)
+
 
 
 def add_object(o, depth = 0):
@@ -30,7 +23,14 @@ def render():
         for o in layer:
             o.draw()
 
-
+def add_collision_pair(group, a, b): #add_collision_pair(boy:ball, None, ball)
+    if group not in collision_pairs:
+        print(f'Added new group {group}')
+        collision_pairs[group] = [ [], [] ]
+    if a:
+        collision_pairs[group][0].append(a)
+    if b:
+        collision_pairs[group][1].append(b)
 
 
 def collide(a, b):
