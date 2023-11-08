@@ -4,6 +4,7 @@ from pico2d import *
 import game_framework
 
 import game_world
+import zombie
 from grass import Grass
 from boy import Boy
 from ball import Ball
@@ -41,8 +42,12 @@ def init():
         game_world.add_collision_pair('boy:ball', None, ball)
 
 
+    zombies = [Zombie() for _ in range(5)]
+    game_world.add_objects(zombies, 1)
 
-
+    game_world.add_collision_pair('boy:ball', boy, None)
+    for zombie in zombies:
+        game_world.add_collision_pair('boy:zombie', None, zombie)
 
 
 def finish():
@@ -66,6 +71,11 @@ def update():
         for ball in balls:
             if game_world.collide(boy, ball):
                 print('COLLISION boy:ball')
+
+        for ball in balls:
+            if game_world.collide(boy, zombie):
+                print('COLLISION boy:zombie')
+
 
 def draw():
     clear_canvas()

@@ -3,8 +3,6 @@ objects = [[] for _ in range(4)]
 collision_pairs = {}
 
 
-
-
 def add_object(o, depth = 0):
     objects[depth].append(o)
 
@@ -72,6 +70,5 @@ def handle_collisions():
                 if collide(a, b):
                     a.handle_collision(group, b)
                     b.handle_collision(group, a)
-
 
 

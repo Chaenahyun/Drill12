@@ -172,6 +172,9 @@ class StateMachine:
     def handle_collision(self, group, other):
         if group == 'boy:ball':
             self.ball_count += 1
+        elif group == 'boy:zombie':
+            game_framework.quit()  # boy와 zombie이 충돌했을 때 프로그램 종료
+            return True  # 충돌이 처리되었음을 반환
 
         return False
 

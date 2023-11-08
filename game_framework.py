@@ -1,5 +1,20 @@
 import time
 
+from boy import Boy
+from game_world import collide
+from zombie import Zombie
+
+collision_pairs = {}
+
+def add_collision_pair(group, a, b):
+    if group not in collision_pairs:
+        print(f'Added new group {group}')
+        collision_pairs[group] = [ [], [] ]
+    if a:
+        collision_pairs[group][0].append(a)
+    if b:
+        collision_pairs[group][1].append(b)
+
 
 def change_mode(mode):
     global stack
@@ -36,6 +51,15 @@ def pop_mode():
 def quit():
     global running
     running = False
+
+def handle_collisions(game_framework=None):
+    for group, pairs in collision_pairs.items():
+        for a in pairs[0]:
+            for b in pairs[1]:
+                if isinstance(a, Boy) and isinstance(b, Zombie):  # 충돌하는지 확인
+                    if collide(a, b):  # 충돌 확인
+                        game_framework.quit()  # 게임 종료 함수 호출
+                        return  # 게임 종료 후 함수 종료
 
 
 def run(start_mode):

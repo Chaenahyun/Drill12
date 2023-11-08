@@ -21,6 +21,10 @@ animation_names = ['Walk']
 class Zombie:
     images = None
 
+    def get_bb(self):
+        # 바운딩 박스의 좌표를 반환합니다.
+        return self.x - 100, self.y - 100, self.x + 100, self.y + 100
+
     def load_images(self):
         if Zombie.images == None:
             Zombie.images = {}
@@ -50,8 +54,12 @@ class Zombie:
             Zombie.images['Walk'][int(self.frame)].composite_draw(0, 'h', self.x, self.y, 200, 200)
         else:
             Zombie.images['Walk'][int(self.frame)].draw(self.x, self.y, 200, 200)
+        draw_rectangle(*self.get_bb())
 
+        
+    def handle_collision(self, group, other):
+        if group == 'boy:zombie':
+            game_framework.quit()  # boy와 zombie이 충돌했을 때 프로그램 종료
+            return True  # 충돌이 처리되었음을 반환
 
-    def handle_event(self, event):
-        pass
 
